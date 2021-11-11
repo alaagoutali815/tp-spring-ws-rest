@@ -27,19 +27,19 @@ import com.example.entities.Compte;
 import javassist.tools.web.BadHttpRequest;
 
 @Component
-
+@Path("/BanqueWS")
 public class CompteRestService {
 	@Autowired
 	private CompteRepository compteRepository;
 	
 	
 	
-	@GetMapping(value = "/")
+	@GetMapping(value = "/Compte")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Compte> getComptes(){
 	return compteRepository.findAll();
 	}
-	@GetMapping(value = "/")
+	@GetMapping(value = "/Compte/{code}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Compte getCompte(@PathParam (value="code") long code) {
 		Optional<Compte> cpp = compteRepository.findById(code);
@@ -49,18 +49,18 @@ public class CompteRestService {
 	    return null;	
 	}
 	
-	@PostMapping(value = "/")
+	@PostMapping(value = "/Compte")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void add(Compte compte) {
 		 compteRepository.save(compte);
 	   
 	}
 
-	@DeleteMapping(value = "/")
+	@DeleteMapping(value = "/Compte/{code}")
 	public void delete(@PathParam (value="code") long code) {
 		compteRepository.deleteById(code);
 	}
-	@PutMapping(value = "/")
+	@PutMapping(value = "/Compte/{code}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Compte update(@PathParam(value="code") long code,Compte compte)throws BadHttpRequest  {
         if (compteRepository.existsById(code)) {
