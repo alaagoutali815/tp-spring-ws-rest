@@ -16,6 +16,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.example.dao.CompteRepository;
 import com.example.entities.Compte;
@@ -28,14 +32,14 @@ public class CompteRestService {
 	@Autowired
 	private CompteRepository compteRepository;
 	
-	@GET
-	@Path("/Compte")
+	
+	
+	@GetMapping(value = "/Compte")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Compte> getComptes(){
 	return compteRepository.findAll();
 	}
-	@GET
-	@Path("/Compte/{code}")
+	@GetMapping(value = "/Compte/{code}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Compte getCompte(@PathParam (value="code") long code) {
 		Optional<Compte> cpp = compteRepository.findById(code);
@@ -45,21 +49,18 @@ public class CompteRestService {
 	    return null;	
 	}
 	
-	@POST
-	@Path("/Compte")
+	@PostMapping(value = "/Compte")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void add(Compte compte) {
 		 compteRepository.save(compte);
 	   
 	}
 
-	@DELETE
-	@Path("/Compte/{code}")
+	@DeleteMapping(value = "/Compte/{code}")
 	public void delete(@PathParam (value="code") long code) {
 		compteRepository.deleteById(code);
 	}
-	@PUT
-	@Path("/Compte/{code}")
+	@PutMapping(value = "/Compte/{code}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Compte update(@PathParam(value="code") long code,Compte compte)throws BadHttpRequest  {
         if (compteRepository.existsById(code)) {
